@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  mongodb:
+    container_name: mongodb-crud-produts
+    restart: always
+    image: mongo
+    environment:
+      # - AUTH=false
+      MONGO_INITDB_ROOT_USERNAME: leandro
+      MONGO_INITDB_ROOT_PASSWORD: lms-51089
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data/db
+  api:
+    build: .
+    image: nodejs
+    container_name: CRUD-products
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    # depends_on:
+    #   - mysql
