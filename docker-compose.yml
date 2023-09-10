@@ -7,12 +7,13 @@ services:
     image: mongo
     environment:
       # - AUTH=false
-      MONGO_INITDB_ROOT_USERNAME: leandro
-      MONGO_INITDB_ROOT_PASSWORD: lms-51089
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT:-mongodb}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-mongodb}
     ports:
       - "27017:27017"
     volumes:
-      - data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro 
+      - ./data:/data/db
   api:
     build: .
     image: nodejs
