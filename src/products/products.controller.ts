@@ -1,10 +1,8 @@
 import { ProductsLogic } from './products.logic';
 import { Controller, Get, Post, Body, Put, Param, Delete, Res, Req } from '@nestjs/common';
 import { ProductDto } from './dto/product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Response, Request } from 'express';
-import { AuthMiddleware } from 'src/auth.middleware';
 
 @ApiTags('Products')
 @Controller('products')

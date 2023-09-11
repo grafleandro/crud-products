@@ -18,12 +18,14 @@ O NestJS vem por padrão configurado para utilizar o Express no backgroud, permi
 
 Devido a tempo curto não foram tratadas algumas condições, como por exemplo a tipagem do retorno de certas funções bem como os testes cobriram apenas os casos basicos.
 
+Foi utilizado bancos de dados noSql, mais cabe resalta que esse tipo de banco de dados não possui suporte total ao ACID (Atomicidade, Consistência, Isolamento e Durabilidade). Desta forma dependendo da aplicação seria mais confiavel levar esse banco de dados para um no modelo relacional.
+
 Melhorias que poderiam ser inseridas:
 * A busca de produtos pode ser tratada para realizar a busca conforme o campo deseja, atualmente busca apenas pelo "id" do produto.
 * Na busca geral inserir paginação e filtro
 * Implanta a autenticação JWT utilizando o postgress
 * Tratar melhor os logs para a utilização do grafana na observação e monitoramento da aplicação
-* Os campos criado por e atualizado por poderia estão fixo com um numero simulando o id do banco de dados relacional.
+* Os campos criado por e atualizado por poderia ser dinamicos se implementado a autenticação por completo, no momento ficou fixo com um numero simulando o id do banco de dados relacional.
 
 ## Infrastructure architecture
 ![Alt text](image.png)

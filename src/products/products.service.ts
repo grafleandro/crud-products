@@ -1,6 +1,4 @@
-import { error } from 'console';
-import { ProductsModule } from './products.module';
-import { BadRequestException, Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
