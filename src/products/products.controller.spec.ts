@@ -29,6 +29,7 @@ describe('ProductsController', () => {
   it(`Create New products - empty database`, () => {
     return request(app.getHttpServer())
       .post('/products')
+      .set('Authorization', process.env.AUTH_TOKEN)
       .send({
         name: "Product 1",
         description: "Product 1 description",
@@ -56,6 +57,7 @@ describe('ProductsController', () => {
   it(`Edit One products`, () => {
     return request(app.getHttpServer())
       .put(`/products/${product}`)
+      .set('Authorization', process.env.AUTH_TOKEN)
       .send({
         name: "Product 1 Edit",
         description: "Product 1 description",
@@ -63,21 +65,21 @@ describe('ProductsController', () => {
       })
       .expect(200)
       .then((result) => {
-        console.log(result)
         expect(typeof result.body.success).toBe("boolean")
       })
-  }, 15000);
+  },);
 
-  // it(`Remove One products`, () => {
-  //   return request(app.getHttpServer())
-  //     .delete(`/products/${product}`)
-  //     .send({
-  //       id: `${product}`
-  //     })
-  //     .expect(200)
-  //     .then((result) => {
-  //       expect(typeof result.body.success).toBe("boolean")
-  //     })
-  // });
+  it(`Remove One products`, () => {
+    return request(app.getHttpServer())
+      .delete(`/products/${product}`)
+      .set('Authorization', process.env.AUTH_TOKEN)
+      .send({
+        id: `${product}`
+      })
+      .expect(200)
+      .then((result) => {
+        expect(typeof result.body.success).toBe("boolean")
+      })
+  });
 
 });

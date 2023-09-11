@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable, InternalServerErrorException, Req, Res } from "@nestjs/common";
 import { ProductsService } from "./products.service";
-import { ProductRequestDto } from "./dto/product.dto";
+import { ProductDto, ProductRequestDto } from "./dto/product.dto";
 import { Response, Request } from 'express';
 import { UpdateProductDto } from "./dto/update-product.dto";
 
@@ -13,7 +13,6 @@ export class ProductsLogic {
     async createLogic(data: ProductRequestDto, @Res() res: Response, @Req() request: Request) {
         try {
 
-            //TODO busca pelo nome
 
             let payload = {
                 name: data.name,
@@ -85,7 +84,7 @@ export class ProductsLogic {
         }
     }
 
-    async updateLogic(id: string, data: UpdateProductDto, @Res() res: Response, @Req() request: Request) {
+    async updateLogic(id: string, data: ProductRequestDto, @Res() res: Response, @Req() request: Request) {
         try {
 
             let product: any = await this.productsService.findOne(id)

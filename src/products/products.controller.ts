@@ -1,10 +1,10 @@
-import { HttpStatus, Put } from '@nestjs/common';
 import { ProductsLogic } from './products.logic';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Res, Req } from '@nestjs/common';
 import { ProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Response, Request } from 'express';
+import { AuthMiddleware } from 'src/auth.middleware';
 
 @ApiTags('Products')
 @Controller('products')
@@ -21,6 +21,7 @@ export class ProductsController {
   }
 
   @Get()
+
   findAll(@Res() res: Response, @Req() request: Request) {
      try{
       return this.ProductsLogic.findAllLogic(res, request);
@@ -39,9 +40,9 @@ export class ProductsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto, @Res() res: Response, @Req() request: Request) { 
+  update(@Param('id') id: string, @Body() ProductDto: ProductDto, @Res() res: Response, @Req() request: Request) { 
      try{
-      return this.ProductsLogic.updateLogic(id, updateProductDto,res, request);
+      return this.ProductsLogic.updateLogic(id, ProductDto,res, request);
     }catch(error){
       console.error(error);
     }
@@ -56,3 +57,5 @@ export class ProductsController {
     }
   }
 }
+
+

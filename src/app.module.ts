@@ -1,11 +1,13 @@
 import { ConfigModule } from '@nestjs/config';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { JokeGeneratorModule } from './joke-generator/joke-generator.module';
 import { config } from './config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthMiddleware } from './auth.middleware';
+import { ProductsController } from './products/products.controller';
 
 @Module({
   imports: [
@@ -25,5 +27,16 @@ import { MongooseModule } from '@nestjs/mongoose';
   controllers: [AppController],
   providers: [AppService],
   
+  
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'products', method: RequestMethod.GET },
+        { path: 'products/:id', method: RequestMethod.GET },
+      )
+      .forRoutes(ProductsController);
+  }
+}

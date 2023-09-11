@@ -30,7 +30,7 @@ export class ProductsService {
 
   async update(id: string, updateProductDto: UpdateProductDto) {
     try {
-      return await this.ProductsModule.updateOne({_id: id, ...updateProductDto})
+      return await this.ProductsModule.updateOne({_id: id}, updateProductDto)
     }catch(error){
       console.log(error);
     }
