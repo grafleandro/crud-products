@@ -9,7 +9,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get("health")
-  getHealth(@Res() res: Response): object {
-    return this.appService.getHealth(res);
+  getHealth(): object {
+    return this.appService.getHealth();
   }
 }

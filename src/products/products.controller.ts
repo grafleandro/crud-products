@@ -1,4 +1,4 @@
-import { HttpStatus } from '@nestjs/common';
+import { HttpStatus, Put } from '@nestjs/common';
 import { ProductsLogic } from './products.logic';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req } from '@nestjs/common';
 import { ProductDto } from './dto/product.dto';
@@ -22,21 +22,37 @@ export class ProductsController {
 
   @Get()
   findAll(@Res() res: Response, @Req() request: Request) {
-     return this.ProductsLogic.findAllLogic(res, request);
+     try{
+      return this.ProductsLogic.findAllLogic(res, request);
+    }catch(error){
+      console.error(error);
+    }
   }
 
   @Get(':id')
   findOne(@Param('id') id: string, @Res() res: Response, @Req() request: Request) {
-     return this.ProductsLogic.findOneLogic(id, res, request);
+     try{
+      return this.ProductsLogic.findOneLogic(id, res, request);
+    }catch(error){
+      console.error(error);
+    }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto, @Res() res: Response, @Req() request: Request) {
-     return this.ProductsLogic.updateLogic(id, updateProductDto,res, request);
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto, @Res() res: Response, @Req() request: Request) { 
+     try{
+      return this.ProductsLogic.updateLogic(id, updateProductDto,res, request);
+    }catch(error){
+      console.error(error);
+    }
   }
 
   @Delete(':id')
   remove(@Param('id') id: string, @Res() res: Response, @Req() request: Request) {
-     return this.ProductsLogic.removeLogic(id, res, request);
+     try{
+      return this.ProductsLogic.removeLogic(id, res, request);
+    }catch(error){
+      console.error(error);
+    }
   }
 }

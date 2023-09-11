@@ -28,7 +28,8 @@ export class ProductsLogic {
             const resp = await this.productsService.create(payload)
 
             return res.status(HttpStatus.CREATED).send({
-                "success": true
+                "success": true,
+                "id": resp._id
             })
 
         } catch (error) {
@@ -41,7 +42,7 @@ export class ProductsLogic {
 
             const resp = await this.productsService.findAll()
 
-            if (resp) {
+            if (resp.length > 0) {
                 return res.status(HttpStatus.OK).send({
                     ...resp,
                 })
@@ -91,7 +92,6 @@ export class ProductsLogic {
 
             if (product) {
                 let payload = {
-                    _id: product._id,
                     name: data.name,
                     description: data.description,
                     price: data.price,
@@ -103,7 +103,7 @@ export class ProductsLogic {
 
                 const resp = await this.productsService.update(id, payload)
 
-                if (resp.modifiedCount > 1) {
+                if (resp.modifiedCount > 0) {
                     return res.status(HttpStatus.OK).send({
                         "success": true
                     })

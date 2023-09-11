@@ -10,7 +10,6 @@ export class JokeGeneratorService {
     async Generator():Promise<generatorResponse>{
         try{
             let jokeGenarator = await this.getJoke()
-
             return {
                 value: jokeGenarator.value
             }
@@ -33,7 +32,7 @@ export class JokeGeneratorService {
 
     async getJoke():Promise<getJokeResponse>{
         try{
-            let data =  this.httpService
+            let data = await this.httpService
             .get(process.env.GENERATOR) 
             .pipe(
                 map((res) => { 
@@ -42,7 +41,6 @@ export class JokeGeneratorService {
             )
             .pipe(
                 catchError((err) => {
-            
                    throw new InternalServerErrorException('Something went wrong with the api Joke Norris');
                 }),
               );

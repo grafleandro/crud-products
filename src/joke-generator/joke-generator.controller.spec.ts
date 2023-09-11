@@ -1,20 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { JokeGeneratorController } from './joke-generator.controller';
-import { JokeGeneratorService } from './joke-generator.service';
+import * as request from 'supertest';
+import { JokeGeneratorModule } from './joke-generator.module';
+import { INestApplication } from '@nestjs/common';
 
 describe('JokeGeneratorController', () => {
-  let controller: JokeGeneratorController;
+  let app: INestApplication;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [JokeGeneratorController],
-      providers: [JokeGeneratorService],
-    }).compile();
+  beforeAll(async () => {
+    const jokeGeneratorModule = await Test.createTestingModule({
+      imports: [JokeGeneratorModule]
+    })
+      .compile();
 
-    controller = module.get<JokeGeneratorController>(JokeGeneratorController);
+    app = jokeGeneratorModule.createNestApplication();
+    await app.init();
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+
+    it(`Get Gerador de Piadas`, () => {
+      return request(app.getHttpServer())
+        .get('/joke-generator')
+        .expect(200)
+        .then((result) => {
+          expect(typeof result.body.value).toBe("string")
+        })
+    });
 });
